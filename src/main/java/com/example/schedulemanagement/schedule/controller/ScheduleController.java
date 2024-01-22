@@ -9,6 +9,7 @@ import com.example.schedulemanagement.schedule.service.ScheduleService;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,9 +48,17 @@ public class ScheduleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
-        return ResponseEntity.ok().body(scheduleService.updateScheduleById(id, scheduleRequestDto));
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id, scheduleRequestDto);
+        URI createdUri = linkTo(methodOn(ScheduleController.class).createSchedule(scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
+
+        return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id) {
+        scheduleService.deleteSchedule(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }
