@@ -4,6 +4,7 @@ import com.example.schedulemanagement.schedule.dto.ScheduleResponseDto;
 import com.example.schedulemanagement.schedule.dto.ScheduleRequestDto;
 import com.example.schedulemanagement.schedule.entity.Schedule;
 import com.example.schedulemanagement.schedule.repository.ScheduleRepository;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,7 @@ public class ScheduleService {
         return new ScheduleResponseDto(saveSchedule);
     }
 
+    public List<ScheduleResponseDto> getSchedules() {
+        return scheduleRepository.findAllByOrderByDateCreatedDesc().stream().map(ScheduleResponseDto::new).toList();
+    }
 }

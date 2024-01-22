@@ -33,9 +33,9 @@ public class ScheduleController {
         return ResponseEntity.created(createdUri).body(scheduleService.createSchedule(scheduleRequestDto));
     }
 
-//    @GetMapping("/memos")
-//    public ResponseEntity<ScheduleResponseDto> getSchedules() {
-//        return scheduleService.getSchedules();
-//    }
+    @GetMapping()
+    public ResponseEntity<List<ScheduleResponseDto>> getSchedules() {
+        return ResponseEntity.ok().body(scheduleService.getSchedules());
+    }
 
 }
