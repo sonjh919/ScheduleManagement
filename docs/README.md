@@ -53,7 +53,7 @@
 ---
 
 # 📋 DataBase
-![schedulemanagementDB](https://github.com/sonjh919/sonjh919.github.io/assets/109019081/d51e9d5f-411c-4b06-ab5b-1d37d071315a)
+![schedulemanagementDB](https://github.com/sonjh919/ScheduleManagement/assets/109019081/946c3535-77f3-4330-8ebf-f9eb7941641b)
 
 ## 🧾 SQL
 ```mysql
