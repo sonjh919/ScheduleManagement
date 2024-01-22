@@ -6,6 +6,7 @@ import com.example.schedulemanagement.schedule.entity.Schedule;
 import com.example.schedulemanagement.schedule.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,13 +36,20 @@ public class ScheduleService {
     @Transactional
     public ScheduleResponseDto updateScheduleById(Long id, ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = findSchedule(id);
+        if(!schedule.getPassword().equals(scheduleRequestDto.getPassword())){
+            throw new IllegalArgumentException("[ERROR] 비밀번호가 다릅니다.");
+        }
         schedule.update(scheduleRequestDto);
 
         return new ScheduleResponseDto(schedule);
     }
 
-    public void deleteSchedule(Long id) {
+    public void deleteSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = findSchedule(id);
+        if(!schedule.getPassword().equals(scheduleRequestDto.getPassword())){
+            throw new IllegalArgumentException("[ERROR] 비밀번호가 다릅니다.");
+        }
+
         scheduleRepository.delete(schedule);
     }
 
