@@ -28,20 +28,26 @@ public class ScheduleService {
     }
 
     public ScheduleResponseDto getScheduleById(Long id) {
-        Schedule schedule = scheduleRepository.findByScheduleId(id);
+        Schedule schedule = findSchedule(id);
         return new ScheduleResponseDto(schedule);
     }
 
     @Transactional
     public ScheduleResponseDto updateScheduleById(Long id, ScheduleRequestDto scheduleRequestDto) {
-        Schedule schedule = scheduleRepository.findByScheduleId(id);
+        Schedule schedule = findSchedule(id);
         schedule.update(scheduleRequestDto);
 
         return new ScheduleResponseDto(schedule);
     }
 
     public void deleteSchedule(Long id) {
-        Schedule schedule = scheduleRepository.findByScheduleId(id);
+        Schedule schedule = findSchedule(id);
         scheduleRepository.delete(schedule);
+    }
+
+    private Schedule findSchedule(Long id){
+        return scheduleRepository.findById(id).orElseThrow(() ->
+            new IllegalArgumentException("[ERROR] 선택한 일정은 존재하지 않습니다.")
+        );
     }
 }
