@@ -28,9 +28,10 @@ public class ScheduleController {
     @PostMapping()
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto scheduleRequestDto){
 
-        URI createdUri = linkTo(methodOn(ScheduleController.class).createSchedule(scheduleRequestDto)).slash(scheduleRequestDto.getDateCreated()).toUri();
+        ScheduleResponseDto scheduleResponseDto = scheduleService.createSchedule(scheduleRequestDto);
+        URI createdUri = linkTo(methodOn(ScheduleController.class).createSchedule(scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
 
-        return ResponseEntity.created(createdUri).body(scheduleService.createSchedule(scheduleRequestDto));
+        return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
 
     @GetMapping()
