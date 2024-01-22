@@ -66,8 +66,7 @@ CREATE TABLE `TB_SCHEDULE`
     `content`    VARCHAR(4096) NOT NULL COMMENT '할일 내용',
     `author`    VARCHAR(32) NOT NULL COMMENT '담당자',
     `password`    VARCHAR(128) NOT NULL COMMENT '비밀번호',
-    `dateCreated`    DATE NOT NULL COMMENT '작성일',
- PRIMARY KEY ( `scheduleId` )
+    `dateCreated`    DATE NOT NULL COMMENT '작성일'
 ) COMMENT = '일정';
 
 ALTER TABLE `TB_SCHEDULE`
