@@ -55,5 +55,23 @@
 # 📋 DataBase
 ![schedulemanagementDB](https://github.com/sonjh919/sonjh919.github.io/assets/109019081/d51e9d5f-411c-4b06-ab5b-1d37d071315a)
 
+## 🧾 SQL
+```mysql
+DROP TABLE `TB_SCHEDULE`;
+
+CREATE TABLE `TB_SCHEDULE`
+(
+    `scheduleId`    INTEGER NOT NULL COMMENT '일정ID',
+    `title`    VARCHAR(64) NOT NULL COMMENT '할일 제목',
+    `content`    VARCHAR(4096) NOT NULL COMMENT '할일 내용',
+    `author`    VARCHAR(32) NOT NULL COMMENT '담당자',
+    `password`    VARCHAR(128) NOT NULL COMMENT '비밀번호',
+    `dateCreated`    DATE NOT NULL COMMENT '작성일',
+ PRIMARY KEY ( `scheduleId` )
+) COMMENT = '일정';
+
+ALTER TABLE `TB_SCHEDULE`
+ ADD CONSTRAINT `TB_SCHEDULE_PK` PRIMARY KEY ( `scheduleId` );
+```
 # 📪 API 설계
 https://sepia-waterfall-6a4.notion.site/api-33903b32568b424dafd3bcbb2d128543?pvs=4
