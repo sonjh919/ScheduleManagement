@@ -47,4 +47,10 @@ public class Schedule {
         this.password = scheduleRequestDto.getPassword();
         this.dateCreated = scheduleRequestDto.getDateCreated();
     }
+
+    public void update(ScheduleRequestDto scheduleRequestDto) {
+        this.title = scheduleRequestDto.getTitle();
+        this.content = scheduleRequestDto.getContent();
+        this.author = scheduleRequestDto.getAuthor();
+    }
 }

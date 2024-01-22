@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,5 +39,17 @@ public class ScheduleController {
     public ResponseEntity<List<ScheduleResponseDto>> getSchedules() {
         return ResponseEntity.ok().body(scheduleService.getSchedules());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> getScheduleById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(scheduleService.getScheduleById(id));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+        return ResponseEntity.ok().body(scheduleService.updateScheduleById(id, scheduleRequestDto));
+    }
+
+
 
 }
