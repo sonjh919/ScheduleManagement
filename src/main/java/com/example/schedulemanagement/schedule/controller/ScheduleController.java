@@ -58,25 +58,16 @@ public class ScheduleController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
-        try {
-            ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id, scheduleRequestDto);
-            URI createdUri = linkTo(methodOn(ScheduleController.class).updateScheduleById(id, scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
-            return ResponseEntity.created(createdUri).body(scheduleResponseDto);
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();
-        }
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id, scheduleRequestDto);
+        URI createdUri = linkTo(methodOn(ScheduleController.class).updateScheduleById(id, scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
 
+        return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
-        try {
-            scheduleService.deleteSchedule(id, scheduleRequestDto);
-            return ResponseEntity.noContent().build();
-        }catch (IllegalArgumentException e){
-            return ResponseEntity.badRequest().build();
-        }
-
+        scheduleService.deleteSchedule(id, scheduleRequestDto);
+        return ResponseEntity.noContent().build();
     }
 
 }
