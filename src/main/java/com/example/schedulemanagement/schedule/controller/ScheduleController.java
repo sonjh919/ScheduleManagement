@@ -10,8 +10,6 @@ import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,19 +32,14 @@ public class ScheduleController {
 
     @PostMapping()
     public ResponseEntity<ScheduleResponseDto> createSchedule(
-        @RequestBody @Valid ScheduleRequestDto scheduleRequestDto, BindingResult bindingResult) {
+        @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
         System.out.println(scheduleRequestDto.getAuthor().length());
-
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if (!fieldErrors.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
 
         ScheduleResponseDto scheduleResponseDto = scheduleService.createSchedule(
             scheduleRequestDto);
         URI createdUri = linkTo(
-            methodOn(ScheduleController.class).createSchedule(scheduleRequestDto,
-                bindingResult)).slash(scheduleResponseDto.getScheduleId()).toUri();
+            methodOn(ScheduleController.class).createSchedule(scheduleRequestDto)).slash(
+            scheduleResponseDto.getScheduleId()).toUri();
 
         return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
