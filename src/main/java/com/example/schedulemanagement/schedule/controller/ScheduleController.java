@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleController {
+
     private final ScheduleService scheduleService;
 
     public ScheduleController(ScheduleService scheduleService) {
@@ -32,16 +33,20 @@ public class ScheduleController {
     }
 
     @PostMapping()
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody @Valid ScheduleRequestDto scheduleRequestDto, BindingResult bindingResult){
+    public ResponseEntity<ScheduleResponseDto> createSchedule(
+        @RequestBody @Valid ScheduleRequestDto scheduleRequestDto, BindingResult bindingResult) {
         System.out.println(scheduleRequestDto.getAuthor().length());
 
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(!fieldErrors.isEmpty()) {
+        if (!fieldErrors.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        ScheduleResponseDto scheduleResponseDto = scheduleService.createSchedule(scheduleRequestDto);
-        URI createdUri = linkTo(methodOn(ScheduleController.class).createSchedule(scheduleRequestDto, bindingResult)).slash(scheduleResponseDto.getScheduleId()).toUri();
+        ScheduleResponseDto scheduleResponseDto = scheduleService.createSchedule(
+            scheduleRequestDto);
+        URI createdUri = linkTo(
+            methodOn(ScheduleController.class).createSchedule(scheduleRequestDto,
+                bindingResult)).slash(scheduleResponseDto.getScheduleId()).toUri();
 
         return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
@@ -57,15 +62,20 @@ public class ScheduleController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id, scheduleRequestDto);
-        URI createdUri = linkTo(methodOn(ScheduleController.class).updateScheduleById(id, scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
+    public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id,
+        @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
+        ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id,
+            scheduleRequestDto);
+        URI createdUri = linkTo(
+            methodOn(ScheduleController.class).updateScheduleById(id, scheduleRequestDto)).slash(
+            scheduleResponseDto.getScheduleId()).toUri();
 
         return ResponseEntity.created(createdUri).body(scheduleResponseDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
+    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id,
+        @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
         scheduleService.deleteSchedule(id, scheduleRequestDto);
         return ResponseEntity.noContent().build();
     }

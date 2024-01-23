@@ -10,6 +10,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ScheduleResponseDto {
+
     private Long scheduleId;
     private String title;
     private String content;

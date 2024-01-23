@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ScheduleService {
+
     private final ScheduleRepository scheduleRepository;
 
     public ScheduleService(ScheduleRepository scheduleRepository) {
@@ -26,7 +27,8 @@ public class ScheduleService {
     }
 
     public List<ScheduleResponseDto> getSchedules() {
-        return scheduleRepository.findAllByOrderByDateCreatedDesc().stream().map(ScheduleResponseDto::new).toList();
+        return scheduleRepository.findAllByOrderByDateCreatedDesc().stream()
+            .map(ScheduleResponseDto::new).toList();
     }
 
     public ScheduleResponseDto getScheduleById(Long id) {
@@ -37,7 +39,7 @@ public class ScheduleService {
     @Transactional
     public ScheduleResponseDto updateScheduleById(Long id, ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = findSchedule(id);
-        validatePassword(schedule,scheduleRequestDto);
+        validatePassword(schedule, scheduleRequestDto);
 
         schedule.update(scheduleRequestDto);
 
@@ -46,19 +48,19 @@ public class ScheduleService {
 
     public void deleteSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = findSchedule(id);
-        validatePassword(schedule,scheduleRequestDto);
+        validatePassword(schedule, scheduleRequestDto);
 
         scheduleRepository.delete(schedule);
     }
 
-    private Schedule findSchedule(Long id){
+    private Schedule findSchedule(Long id) {
         return scheduleRepository.findById(id).orElseThrow(() ->
             new EntityNotFoundException("[ERROR] 선택한 일정은 존재하지 않습니다.")
         );
     }
 
-    private void validatePassword(Schedule schedule, ScheduleRequestDto scheduleRequestDto){
-        if(!schedule.getPassword().equals(scheduleRequestDto.getPassword())){
+    private void validatePassword(Schedule schedule, ScheduleRequestDto scheduleRequestDto) {
+        if (!schedule.getPassword().equals(scheduleRequestDto.getPassword())) {
             throw new BadCredentialsException("[ERROR] 비밀번호가 다릅니다.");
         }
     }

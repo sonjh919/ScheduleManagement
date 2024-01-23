@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @NotNull
 public class ScheduleRequestDto {
+
     @Size(max = 32)
     private String title;
 
