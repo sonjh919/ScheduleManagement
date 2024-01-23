@@ -57,7 +57,7 @@ public class ScheduleController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+    public ResponseEntity<ScheduleResponseDto> updateScheduleById(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.updateScheduleById(id, scheduleRequestDto);
         URI createdUri = linkTo(methodOn(ScheduleController.class).updateScheduleById(id, scheduleRequestDto)).slash(scheduleResponseDto.getScheduleId()).toUri();
 
@@ -65,7 +65,7 @@ public class ScheduleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+    public ResponseEntity<ScheduleResponseDto> deleteSchedule(@PathVariable Long id, @RequestBody @Valid ScheduleRequestDto scheduleRequestDto) {
         scheduleService.deleteSchedule(id, scheduleRequestDto);
         return ResponseEntity.noContent().build();
     }

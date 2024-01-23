@@ -10,11 +10,15 @@ import lombok.Data;
 public class ScheduleRequestDto {
     @Size(max = 32)
     private String title;
+
     @Size(max = 1024)
     private String content;
+
     @Size(max = 8)
     private String author;
+
     @Size(max = 32)
     private String password;
+
     private Date dateCreated;
 }
