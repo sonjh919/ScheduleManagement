@@ -6,11 +6,12 @@ import com.example.schedulemanagement.schedule.dto.ScheduleResponseDto;
 import com.example.schedulemanagement.schedule.entity.Schedule;
 import com.example.schedulemanagement.schedule.repository.ScheduleRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
@@ -19,6 +20,7 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
+    @Transactional
     public ScheduleResponseDto createSchedule(ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = new Schedule(scheduleRequestDto);
         Schedule saveSchedule = scheduleRepository.save(schedule);
@@ -46,6 +48,7 @@ public class ScheduleService {
         return new ScheduleResponseDto(schedule);
     }
 
+    @Transactional
     public void deleteSchedule(Long id, ScheduleRequestDto scheduleRequestDto) {
         Schedule schedule = findSchedule(id);
         validatePassword(schedule, scheduleRequestDto);
